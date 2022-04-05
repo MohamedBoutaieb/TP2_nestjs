@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cv } from 'src/cv/entities/cv.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -16,7 +16,7 @@ export class UserService {
  
  ) {}
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return this.UserRepository.save(createUserDto);
   }
 
   findAll() {
@@ -24,14 +24,29 @@ export class UserService {
   }
 
   findOne(id: string) {
-    return  this.UserRepository.find({where:{id : id}});
+    throw new NotFoundException(`user with id ${id} not found`);
+    const usr =  this.UserRepository.findOne({where:{id : id}});
+    if (usr ){ return usr;}
+ 
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+   async update(id: string, updateUserDto: UpdateUserDto) {
+     const usr = await this.UserRepository.count({where:{id : id}});
+  
+     if (usr){await this.UserRepository.update(id, updateUserDto);
+      return `user with id ${id} has been updated successfully`;
+    }
+    else {throw new NotFoundException("user is not found");}
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const usr = await this.UserRepository.findOne({where:{id : id}});
+     if (usr){
+      await this.UserRepository.softDelete(id);
+      return usr;
+     }
+       throw new NotFoundException(`user with id ${id} does not exist`); 
+    };
+    
   }
-}
+

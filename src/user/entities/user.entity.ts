@@ -1,6 +1,7 @@
 
 import {
   Column,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
@@ -23,5 +24,8 @@ export class User {
     () => Cv,(cv)=>cv.user,
     )
     Cvs : Cv[];
+  @DeleteDateColumn()
+  del;
+  
 
 }
