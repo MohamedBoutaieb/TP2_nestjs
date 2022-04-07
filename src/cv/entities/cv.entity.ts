@@ -28,8 +28,8 @@ export class Cv {
   age: number;
   @Column()
   path: string;
-  @ManyToOne((usr)=>User)
-  user: User;
+  @ManyToOne((type)=>User)
+  user: User; 
   @ManyToMany(()=>Skill, skill=>skill.cvs  )
   skills: Skill[];
 }

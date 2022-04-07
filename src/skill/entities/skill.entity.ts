@@ -2,6 +2,7 @@
 import { Cv } from 'src/entities/cv.entity';
 import {
   Column,
+  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -24,5 +25,6 @@ export class Skill {
   @ManyToMany(()=>Cv, cv=>cv.skills)
   @JoinTable()
   cvs: Cv[];
-  
+  @DeleteDateColumn()
+  del;
 }

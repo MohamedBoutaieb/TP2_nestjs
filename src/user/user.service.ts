@@ -23,11 +23,10 @@ export class UserService {
     return this.UserRepository.find();
   }
 
-  findOne(id: string) {
-    throw new NotFoundException(`user with id ${id} not found`);
-    const usr =  this.UserRepository.findOne({where:{id : id}});
+  async findOne(id: string) {
+    const usr = await this.UserRepository.findOne({where:{id : id}});
     if (usr ){ return usr;}
- 
+    throw new NotFoundException(`user with id ${id} not found`);
   }
 
    async update(id: string, updateUserDto: UpdateUserDto) {

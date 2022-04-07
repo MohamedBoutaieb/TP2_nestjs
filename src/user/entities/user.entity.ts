@@ -23,7 +23,7 @@ export class User {
   @OneToMany(
     () => Cv,(cv)=>cv.user,
     )
-    Cvs : Cv[];
+    Cvs : Cv[] ;
   @DeleteDateColumn()
   del;
   
