@@ -35,5 +35,6 @@ export class Cv {
   user: User;
   @JoinTable()
   @ManyToMany(() => Skill, (skill) => skill.cvs)
+  @JoinTable()
   skills: Skill[];
 }

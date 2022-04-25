@@ -51,6 +51,7 @@ export class CvService {
   }
   async removeSkill(skillId: string,cvId:string){
     const cv = await this.cvRepository.findOne({where : {id: cvId}});
+
     if (!cv ) throw new NotFoundException("please check your skill or cv id");
     if (!cv.skills) cv.skills =[];
     const skills = [];
